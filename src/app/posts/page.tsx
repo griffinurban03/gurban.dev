@@ -1,43 +1,49 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts } from "@/lib/posts";
-import { formatDate } from "@/lib/format";
+import { formatDateDot } from "@/lib/format";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Posts",
-  description: "Writing and notes.",
+  title: site.posts.title,
+  description: site.posts.subtitle,
 };
 
 export default function PostsPage() {
   const posts = getAllPosts();
 
   return (
-    <div className="space-y-8">
-      <header className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight">Posts</h1>
-        <p className="text-muted">Writing and notes.</p>
+    <div className="mt-14">
+      <header>
+        <h1 className="font-display text-[40px] font-bold tracking-[-0.03em] text-fg">
+          {site.posts.title}
+        </h1>
+        <p className="mt-2 text-muted">{site.posts.subtitle}</p>
       </header>
 
       {posts.length === 0 ? (
-        <p className="text-muted">No posts yet.</p>
+        <p className="mt-10 text-muted">{site.posts.empty}</p>
       ) : (
-        <ul className="space-y-8">
+        <ul className="mt-8">
           {posts.map((post) => (
             <li key={post.url}>
-              <Link href={post.url} className="group block space-y-1">
-                <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-                  <h2 className="font-medium transition-colors group-hover:text-accent">
+              <Link
+                href={post.url}
+                className="card-link -mx-3.5 block rounded-[9px] px-3.5 py-3.75 hover:translate-x-1.25 hover:bg-accent/10"
+              >
+                <div className="flex items-baseline justify-between gap-4">
+                  <h2 className="text-[15.5px] font-medium text-fg">
                     {post.title}
                   </h2>
                   <time
                     dateTime={post.date}
                     className="shrink-0 font-mono text-xs text-muted"
                   >
-                    {formatDate(post.date)}
+                    {formatDateDot(post.date)}
                   </time>
                 </div>
                 {post.summary && (
-                  <p className="text-sm text-muted">{post.summary}</p>
+                  <p className="mt-1 text-sm text-muted">{post.summary}</p>
                 )}
               </Link>
             </li>

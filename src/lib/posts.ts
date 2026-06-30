@@ -9,6 +9,8 @@ export type PostMeta = {
   slug: string;
   title: string;
   summary: string;
+  /** Optional topic tags from frontmatter; the first is shown on the post page. */
+  tags: string[];
   /** Full ISO 8601 timestamp (UTC). */
   date: string;
   /** Date portion only, "YYYY-MM-DD" — used as the first URL segment. */
@@ -46,6 +48,9 @@ function readPost(file: string): Post {
     slug,
     title: typeof data.title === "string" ? data.title : slug,
     summary: typeof data.summary === "string" ? data.summary : "",
+    tags: Array.isArray(data.tags)
+      ? data.tags.filter((t): t is string => typeof t === "string")
+      : [],
     date,
     dateSlug,
     url: `/posts/${dateSlug}/${slug}/`,
@@ -66,6 +71,7 @@ export function getAllPosts(): PostMeta[] {
     slug: p.slug,
     title: p.title,
     summary: p.summary,
+    tags: p.tags,
     date: p.date,
     dateSlug: p.dateSlug,
     url: p.url,

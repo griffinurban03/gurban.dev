@@ -31,7 +31,7 @@ gurban.dev/
 
 `src/lib/` is the single source of truth for non-post content:
 
-- **`site.ts`** — name, domain, role, links, nav. Edit copy here, not in components.
+- **`site.ts`** — all site text: identity (name, role, links, nav) and per-page UI copy (headings, labels, About bio). Edit copy here, not in components or pages.
 - **`projects.ts`** — the project list (`featured: true` also surfaces it on the homepage).
 - **`posts.ts`** — reads and parses the post files.
 - **`format.ts` / `seo.ts`** — date formatting and SEO helpers.

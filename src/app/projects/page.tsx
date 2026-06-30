@@ -1,35 +1,38 @@
 import type { Metadata } from "next";
 import { projects } from "@/lib/projects";
+import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Projects",
-  description: "Things I've built.",
+  title: site.projects.title,
+  description: site.projects.metaDescription,
 };
 
 export default function ProjectsPage() {
   return (
-    <div className="space-y-8">
-      <header className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight">Projects</h1>
-        <p className="text-muted">A selection of things I&apos;ve built.</p>
+    <div className="mt-14">
+      <header>
+        <h1 className="font-display text-[40px] font-bold tracking-[-0.03em] text-fg">
+          {site.projects.title}
+        </h1>
+        <p className="mt-2 text-muted">{site.projects.subtitle}</p>
       </header>
 
-      <ul className="space-y-6">
+      <ul className="mt-8 space-y-3">
         {projects.map((project) => (
-          <li
-            key={project.name}
-            className="rounded-lg border border-border bg-surface p-5 transition-colors hover:border-muted/50"
-          >
+          <li key={project.name}>
             <a
               href={project.href}
               target="_blank"
               rel="noreferrer"
-              className="group block"
+              className="group card-link -mx-3.5 block rounded-[9px] px-3.5 py-3.75 hover:translate-x-1.25 hover:bg-accent/10"
             >
-              <h2 className="font-medium transition-colors group-hover:text-accent">
-                {project.name}
-              </h2>
-              <p className="mt-1 text-sm text-muted">{project.description}</p>
+              <span className="text-[15.5px] font-medium text-fg">
+                {project.name}{" "}
+                <span className="inline-block text-faint transition-[transform,color] duration-500 ease-in-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent">
+                  ↗
+                </span>
+              </span>
+              <p className="mt-1 text-sm text-muted transition-colors duration-500 ease-in-out group-hover:text-body">{project.description}</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 {project.tags.map((tag) => (
                   <span
